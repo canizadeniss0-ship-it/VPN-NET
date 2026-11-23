@@ -6,7 +6,7 @@ on:
   push:
     paths:
       - '.github/workflows/build-apk.yml'
-      - 'VPN_NET_Android_Proyecto.zip'
+      - 'VPN_NET_Android_Proyecto(1).zip'
 
 jobs:
   build:
@@ -29,7 +29,7 @@ jobs:
 
       - name: Preparar proyecto
         run: |
-          unzip -o VPN_NET_Android_Proyecto.zip -d .
+          unzip -o "VPN_NET_Android_Proyecto(1).zip" -d .
           cd VPN_NET_Android
           gradle assembleDebug
 

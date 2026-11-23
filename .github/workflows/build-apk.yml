@@ -1,0 +1,40 @@
+
+name: Compilar VPN NET
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build-apk.yml'
+      - 'VPN_NET_Android_Proyecto.zip'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar proyecto
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Instalar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Preparar proyecto
+        run: |
+          unzip -o VPN_NET_Android_Proyecto.zip -d .
+          cd VPN_NET_Android
+          gradle assembleDebug
+
+      - name: Guardar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: VPN-NET-APK
+          path: VPN_NET_Android/app/build/outputs/apk/debug/app-debug.apk
